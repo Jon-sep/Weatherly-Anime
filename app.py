@@ -1100,12 +1100,16 @@ def home():
 
     try:
         weather = get_weather(city)
+
         if weather is None:
             error = "City not found. Please try another city."
-    except requests.exceptions.RequestException:
+
+    except requests.exceptions.RequestException as e:
+        print("WEATHER API ERROR:", repr(e))
         error = "Weather service is unavailable. Please try again."
+
     except Exception as e:
-        print("Application error:", e)
+        print("APPLICATION ERROR:", repr(e))
         error = "Something went wrong while loading the weather."
 
     return render_template_string(
